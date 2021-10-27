@@ -7,9 +7,12 @@
     <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th> Author</th>
-                <th> ISBN</th>
+                <th>نام قطعه</th>
+                <th>مدل</th>
+                <th>PartNo</th>
+                <th>تعداد</th>
+                <th>آدرس</th>
+                <th>بارکد</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,28 +30,31 @@
         function loadDataTable() {
             dataTable = $('#DT_load').DataTable({
                 "ajax": {
-                    "url": "/api/home",
+                    "url": "/api/warehouse",
                     "type": "GET",
                     "datatype": "json"
                 },
                 "columns": [
-                    { "data": "name", "width": "20%" },
-                    { "data": "author", "width": "20%" },
-                    { "data": "isbn", "width": "20%" },
+                    { "data": "ingredientsName", "autoWidth": true },
+                    { "data": "model", "autoWidth": true },
+                    { "data": "partNo", "autoWidth": true},
+                    { "data": "qty", "autoWidth": true },
+                    { "data": "stockIngredients", "autoWidth": true },
+                    { "data": "barcode", "autoWidth": true },
                     {
-                        "data": "id",
+                        "data": "srl",
                         "render": function (data) {
                             return `<div class="text-center">
-                        <a href="/home/Edit?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                        <a href="/Home/Edit?srl=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
                             Edit
                         </a>
                         &nbsp;
                         <a class='btn btn-danger text-white' style='cursor:pointer; width:70px;'
-                            onclick=Delete('/api/home?id='+${data})>
+                            onclick=Delete('/api/warehouse?srl='+${data})>
                             Delete
                         </a>
                         </div>`;
-                        }, "width": "40%"
+                        }, "width": "15%"
                     }
                 ],
                 "language": {
@@ -60,9 +66,9 @@
 
         function Delete(url) {
             swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover",
-                icon: "warning",
+                title: "ایا مطمئن هستید?",
+                text: "سعید این اگه پاک بشه بر نمی گرده ها",
+                icon: "اخطار",
                 buttons: true,
                 dangerMode: true
             }).then((willDelete) => {
