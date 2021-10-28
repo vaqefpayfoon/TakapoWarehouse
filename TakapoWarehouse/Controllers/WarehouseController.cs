@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TakapoWarehouse.Data;
 using TakapoWarehouse.Models;
 using TakapoWarehouse.ViewModel;
 
@@ -26,7 +27,7 @@ namespace TakapoWarehouse.Controllers
         public IActionResult GetAll()
         {
             var result =  _db.IngredientsWarehouses.ToList();
-            var next = result.Select(a => new IngredientsViewModel { Srl = a.Srl, IngredientsName =  a.IngredientsName, Model = a.Model, PartNo = a.PartNo, Qty = a.Qty, StockIngredients = a.StockIngredients, barcode = a.barcode });
+            var next = result.Select(a => new IngredientsViewModel { Srl = a.Srl, IngredientsName =  a.IngredientsName, GoodsModel = a.GoodsModel, PartNo = a.PartNo, StockIngredients = a.StockIngredients, Barcode = a.Barcode });
             return Json(new { data = next});
         }
         [HttpDelete]
@@ -35,11 +36,11 @@ namespace TakapoWarehouse.Controllers
             var ingredient = await _db.IngredientsWarehouses.FirstOrDefaultAsync(u => u.Srl == srl);
             if (ingredient == null)
             {
-                return Json(new { success = false, message = "Error while Deleting" });
+                return Json(new { success = false, message = "نشد پاک کنم" });
             }
             _db.IngredientsWarehouses.Remove(ingredient);
             await _db.SaveChangesAsync();
-            return Json(new { success = true, message = "Delete successful" });
+            return Json(new { success = true, message = "خیالت راحت پاک شد" });
         }
     }
 }

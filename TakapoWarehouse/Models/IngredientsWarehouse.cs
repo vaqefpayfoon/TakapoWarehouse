@@ -10,12 +10,20 @@ namespace TakapoWarehouse.Models
     {
         [Key]
         public int Srl { get; set; }
+        [Display(Name = "نام قطعه")]
         public string IngredientsName { get; set; }
-        public string Model { get; set; }
+        [Display(Name = "مدل")]
+        public string GoodsModel { get; set; }
         public string PartNo { get; set; }
+        [Display(Name = "تعداد")]
         public int Qty { get; set; }
+        [Display(Name = "توضیحات")]
         public string Description { get; set; }
+        [Display(Name = "آدرس")]
         public string StockIngredients { get; set; }
-        public string barcode { get; set; }
+        [Display(Name = "بارکد")]
+        public string Barcode { get; set; }
+        [Display(Name = "سریال قطعه")]
+        public string SerialNo { get; set; }
     }
 }

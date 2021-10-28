@@ -1,10 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using TakapoWarehouse.Models;
 
-#nullable disable
-
-namespace TakapoWarehouse.Models
+namespace TakapoWarehouse.Data
 {
     public partial class Takapo_CRMContext : DbContext
     {
@@ -309,7 +307,7 @@ namespace TakapoWarehouse.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Model)
+                entity.Property(e => e.GoodsModel)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
@@ -321,7 +319,11 @@ namespace TakapoWarehouse.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.barcode)
+                entity.Property(e => e.Barcode)
+                    .HasMaxLength(int.MaxValue)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SerialNo)
                     .HasMaxLength(int.MaxValue)
                     .IsUnicode(false);
             });
