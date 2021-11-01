@@ -26,7 +26,7 @@ namespace TakapoWarehouse.Controllers
 
         public IActionResult GetAll()
         {
-            var result =  _db.IngredientsWarehouses.ToList();
+            var result =  _db.IngredientsWarehouses.ToList().OrderByDescending(Srl => Srl.Srl);
             var next = result.Select(a => new IngredientsViewModel { Srl = a.Srl, IngredientsName =  a.IngredientsName, GoodsModel = a.GoodsModel, PartNo = a.PartNo, StockIngredients = a.StockIngredients, Barcode = a.Barcode });
             return Json(new { data = next});
         }

@@ -21,6 +21,7 @@ namespace TakapoWarehouse.Data
         public virtual DbSet<BasSupcustGood> BasSupcustGoods { get; set; }
         public virtual DbSet<BasSupcustType> BasSupcustTypes { get; set; }
         public virtual DbSet<IngredientsWarehouse> IngredientsWarehouses { get; set; }
+        public virtual DbSet<IngredientDoc> IngredientDocs { get; set; }
         public virtual DbSet<InvBrand> InvBrands { get; set; }
         public virtual DbSet<InvGood> InvGoods { get; set; }
         public virtual DbSet<HplPersonal> HplPersonals{ get; set; }
@@ -326,6 +327,39 @@ namespace TakapoWarehouse.Data
                 entity.Property(e => e.SerialNo)
                     .HasMaxLength(int.MaxValue)
                     .IsUnicode(false);
+            });
+            modelBuilder.Entity<IngredientDoc>(entity =>
+            {
+                entity.HasKey(e => e.Srl);
+
+                entity.ToTable("IngredientDoc");
+
+                entity.Property(e => e.Srl).HasColumnName("srl");
+
+                entity.Property(e => e.DocDate)
+                    .IsUnicode(false)
+                    .HasColumnName("doc_date");
+
+                entity.Property(e => e.Description)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.DocType)
+                    .IsUnicode(false)
+                    .HasColumnName("doc_type");
+
+                entity.Property(e => e.HplSrl).HasColumnName("hpl_srl");
+                entity.Property(e => e.IngredientSrl).HasColumnName("ingredient_srl");
+
+                entity.HasOne(d => d.SrlPersonalNavigation)
+                    .WithMany(p => p.IngredientDocs)
+                    .HasForeignKey(d => d.HplSrl)
+                    .HasConstraintName("FK_Personel_srl");
+
+                entity.HasOne(d => d.SrlIngredientsWarehouseNavigation)
+                    .WithMany(p => p.IngredientDocs)
+                    .HasForeignKey(d => d.IngredientSrl)
+                    .HasConstraintName("FK_IngredientsWarehouse_srl");
             });
             modelBuilder.Entity<InvBrand>(entity =>
             {

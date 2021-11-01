@@ -31,9 +31,11 @@ namespace TakapoWarehouse.Controllers
         [HttpPost]
         public IActionResult Create(IngredientsWarehouse model)
         {
+            int max = _db.IngredientsWarehouses.Max(field => field.Srl);
+            model.Srl = max + 1;
             _db.IngredientsWarehouses.Add(model);
             _db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
         public IActionResult Edit(int srl)
         {
@@ -45,7 +47,7 @@ namespace TakapoWarehouse.Controllers
         {
             _db.IngredientsWarehouses.Update(model);
             _db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

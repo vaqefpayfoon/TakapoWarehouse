@@ -8,6 +8,10 @@ namespace TakapoWarehouse.Models
 {
     public partial class HplPersonal
     {
+        public HplPersonal()
+        {
+            IngredientDocs = new HashSet<IngredientDoc>();
+        }
         [Key]
         public int Srl { get; set; }
         public string UDateTime { get; set; }
@@ -26,5 +30,6 @@ namespace TakapoWarehouse.Models
         public string BusinessKind { get; set; }
         public byte? UserPermission { get; set; }
         public byte? Section { get; set; }
+        public virtual ICollection<IngredientDoc> IngredientDocs { get; set; }
     }
 }
