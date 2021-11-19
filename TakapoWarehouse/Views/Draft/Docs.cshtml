@@ -1,0 +1,40 @@
+﻿@using TakapoWarehouse.Helper;
+@model IEnumerable<IngredientDoc>
+<div class="container row">
+    @if (ViewBag.Message != "null")
+    {
+        <div class="alert alert-warning" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+</div>
+<div class="container row d-flex justify-content-center">
+    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a asp-controller="Draft" asp-action="Enter" asp-route-srl="@TempData["IngredientSrl"]" class="btn btn-info pr-1">ورود</a>
+            <a asp-controller="Draft" asp-action="Export" asp-route-srl="@TempData["IngredientSrl"]" class="btn btn-warning">خروج</a>
+        </div>
+    </div>
+</div>
+<div class="container row">
+    <table class="table table-dark">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.DocDate.ToPersianDateTime()
+                </td>
+                <td>
+                    @if (item.DocType == 1)
+                    {
+                        <span>ورود به انبار</span>
+                    }
+                    else
+                    {
+                        <span>خروج از انبار</span>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

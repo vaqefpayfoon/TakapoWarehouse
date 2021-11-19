@@ -39,7 +39,7 @@ namespace TakapoWarehouse.Models
         public int IngredientSrl { get; set; }
         public DateTime DocDate { get; set; }
         public string Description { get; set; }
-        public int DocType { get; set; }
+        public byte DocType { get; set; }
         public virtual HplPersonal SrlPersonalNavigation { get; set; }
         public virtual IngredientsWarehouse SrlIngredientsWarehouseNavigation { get; set; }
     }

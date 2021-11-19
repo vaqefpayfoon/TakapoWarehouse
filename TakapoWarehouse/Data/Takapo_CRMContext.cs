@@ -51,6 +51,31 @@ namespace TakapoWarehouse.Data
                     .IsUnicode(false)
                     .HasColumnName("city_name");
             });
+            modelBuilder.Entity<HplPersonal>(entity =>
+            {
+                entity.HasKey(e => e.Srl);
+
+                entity.ToTable("hpl_personal");
+
+                entity.Property(e => e.Srl).HasColumnName("srl");
+                entity.Property(e => e.UDateTime).HasColumnName("u_date_time");
+                entity.Property(e => e.NameHpl).HasColumnName("name_hpl");
+                entity.Property(e => e.NoHpl).HasColumnName("no_hpl");
+                entity.Property(e => e.MobileNo).HasColumnName("mobile_no");
+                entity.Property(e => e.TelNo).HasColumnName("tel_no");
+                entity.Property(e => e.AddressHpl).HasColumnName("address_hpl");
+                entity.Property(e => e.FatherName).HasColumnName("father_name");
+                entity.Property(e => e.UserName).HasColumnName("user_name");
+                entity.Property(e => e.PassCode).HasColumnName("pass_code");
+                entity.Property(e => e.MeliCode).HasColumnName("meli_code");
+                entity.Property(e => e.IdNo).HasColumnName("id_no");
+                entity.Property(e => e.MailAddress).HasColumnName("mail_address");
+                entity.Property(e => e.Active).HasColumnName("active");
+                entity.Property(e => e.BusinessKind).HasColumnName("business_kind");
+                entity.Property(e => e.UserPermission).HasColumnName("user_permission");
+                entity.Property(e => e.Section).HasColumnName("section");
+
+            });
             modelBuilder.Entity<BasCountry>(entity =>
             {
                 entity.HasKey(e => e.Srl);

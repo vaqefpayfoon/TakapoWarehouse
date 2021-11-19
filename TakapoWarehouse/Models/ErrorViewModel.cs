@@ -8,4 +8,9 @@ namespace TakapoWarehouse.Models
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
+    public class KeyValueModel
+    {
+        public string Key { get; set; }
+        public int Value { get; set; }
+    }
 }

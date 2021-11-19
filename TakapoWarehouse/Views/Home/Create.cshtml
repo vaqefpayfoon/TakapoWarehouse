@@ -1,10 +1,10 @@
 ﻿@model IngredientsWarehouse
 
-@{ ViewData["Title"] = "Edit";
+@{ ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <br />
-<h2 class="text-info"> قطعه جدید</h2>
+<h2 class="text-info"> تاریخچه</h2>
 <br />
 
 <form method="post" asp-action="Create" class="col-12">
@@ -81,7 +81,15 @@
 
         <div class="form-group row">
             <div class="col-5 offset-2">
-                <partial name="_EditAndBackToListButton" />
+                <div class="row">
+                    <div class="col-6">
+                        <button asp-action="Create" class="btn btn-info form-control">ذخیره</button>
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control">بازگشت</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
