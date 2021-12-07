@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TakapoWarehouse.Data;
 using TakapoWarehouse.Models;
+using TakapoWarehouse.ViewModel;
 
 namespace TakapoWarehouse.Controllers
 {
@@ -21,9 +22,18 @@ namespace TakapoWarehouse.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string barcode)
+        public IActionResult Index(SearchViewModel model)
         {
-            var find = _db.IngredientsWarehouses.FirstOrDefault(x => x.Barcode == barcode);
+            IngredientsWarehouse find = null;
+            if(model.Barcode != null)
+            {
+                find = _db.IngredientsWarehouses.FirstOrDefault(x => x.Barcode == model.Barcode.Trim());
+            }
+            if(model.PartNo != null)
+            {
+                find = _db.IngredientsWarehouses.FirstOrDefault(x => x.PartNo.Contains(model.PartNo.Trim()));
+            }
+            
             if(find == null)
             {
                 return NotFound();
@@ -47,6 +57,7 @@ namespace TakapoWarehouse.Controllers
             var detail = _db.IngredientDocs.Where(x => x.IngredientSrl == srl);
             find.IngredientDocs = detail.ToList();
             TempData["IngredientSrl"] = find.Srl;
+            //HttpContext.Session.SetInt32("IngredientSrl", find.Srl);
             return View(find.IngredientDocs);
         }
         public IActionResult Enter(int srl)
@@ -55,7 +66,8 @@ namespace TakapoWarehouse.Controllers
             if (model == null)
             {
                 model = new IngredientDoc();
-                model.Srl = 1;
+                int maxsrl = _db.IngredientDocs.Max(x => x.Srl) + 1;
+                model.Srl = maxsrl;
                 model.DocType = 1;
                 model.DocDate = DateTime.Now;
                 model.IngredientSrl = srl;
@@ -65,7 +77,8 @@ namespace TakapoWarehouse.Controllers
             }
             else
             {
-                model.Srl = model.Srl + 1;
+                int maxsrl = _db.IngredientDocs.Max(x => x.Srl) + 1;
+                model.Srl = maxsrl;
                 if (model.DocType == 1)
                 {
                     HttpContext.Session.SetString("Message", "این قطعه حواله خورده است");
@@ -83,14 +96,14 @@ namespace TakapoWarehouse.Controllers
             }
             return RedirectToAction("Docs", new { srl = srl });
         }
-        
         public IActionResult Export(int srl)
         {
             IngredientDoc model = _db.IngredientDocs.Where(x => x.IngredientSrl == srl).OrderByDescending(x => x.Srl).FirstOrDefault();
             if (model == null)
             {
                 model = new IngredientDoc();
-                model.Srl = 1;
+                int maxsrl = _db.IngredientDocs.Max(x => x.Srl) + 1;
+                model.Srl = maxsrl;
                 model.DocType = 2;
                 model.DocDate = DateTime.Now;
                 model.IngredientSrl = srl;
@@ -99,7 +112,8 @@ namespace TakapoWarehouse.Controllers
             }
             else
             {
-                model.Srl = model.Srl + 1;
+                int maxsrl = _db.IngredientDocs.Max(x => x.Srl) + 1;
+                model.Srl = maxsrl;
                 if (model.DocType == 2)
                 {
                     HttpContext.Session.SetString("Message", "این قطعه حواله خورده است");
@@ -115,6 +129,14 @@ namespace TakapoWarehouse.Controllers
                     _db.SaveChanges();
                 }
             }
+            return RedirectToAction("Docs", new { srl = srl });
+        }
+        public IActionResult Delete(int id, int srl)
+        {
+            //var srl = HttpContext.Session.GetInt32("IngredientSrl");
+            var item = _db.IngredientDocs.Find(id);
+            _db.IngredientDocs.Remove(item);
+            _db.SaveChanges();
             return RedirectToAction("Docs", new { srl = srl });
         }
     }

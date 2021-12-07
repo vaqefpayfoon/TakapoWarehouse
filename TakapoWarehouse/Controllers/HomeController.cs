@@ -33,6 +33,7 @@ namespace TakapoWarehouse.Controllers
         {
             int max = _db.IngredientsWarehouses.Max(field => field.Srl);
             model.Srl = max + 1;
+            model.Barcode = model.Barcode.Trim();
             _db.IngredientsWarehouses.Add(model);
             _db.SaveChanges();
             return RedirectToAction("Index");
@@ -45,6 +46,7 @@ namespace TakapoWarehouse.Controllers
         [HttpPost]
         public IActionResult Edit(IngredientsWarehouse model)
         {
+            model.Barcode = model.Barcode.Trim();
             _db.IngredientsWarehouses.Update(model);
             _db.SaveChanges();
             return RedirectToAction("Index");

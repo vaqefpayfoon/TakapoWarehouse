@@ -16,7 +16,7 @@
         </div>
     </div>
 </div>
-<div class="container row">
+<div class="container">
     <table class="table table-dark">
         @foreach (var item in Model)
         {
@@ -33,6 +33,9 @@
                     {
                         <span>خروج از انبار</span>
                     }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Srl" asp-route-srl="@TempData["IngredientSrl"]" class="btn btn-sm btn-danger form-control">حذف</a>
                 </td>
             </tr>
         }
